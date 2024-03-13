@@ -1,0 +1,5 @@
+
+’
+java:S1319%"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ß™§øøÿÿÿÿ8úƒÕÅá1
+L	java:S106:"+Replace this use of System.out by a logger.(ÌŠ´´ÿÿÿÿÿ8Š„ÕÅá1
+L	java:S106E"+Replace this use of System.out by a logger.(Êçˆíùÿÿÿÿ8‹„ÕÅá1
