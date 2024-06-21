@@ -1,27 +1,23 @@
 
-x
-java:S1192&"VDefine a constant instead of duplicating this literal "Ğ’ÑĞµ Ğ·Ğ°Ğ´Ğ°Ñ‡Ğ¸: " 3 times.(£Ìô½ùÿÿÿÿ8Á¦ïáƒ2
-q
-java:S1192'"TDefine a constant instead of duplicating this literal "Ğ’ÑĞµ ÑĞ¿Ğ¸ĞºĞ¸: " 3 times.(áÊïæ8Á¦ïáƒ2
-~
-java:S1192("\Define a constant instead of duplicating this literal "Ğ’ÑĞµ Ğ¿Ğ¾Ğ´Ğ·Ğ°Ğ´Ğ°Ñ‡Ğ¸: " 3 times.(‹ÓÆ¾øÿÿÿÿ8Á¦ïáƒ2
-_
-java:S1854"BRemove this useless assignment to local variable "historyManager".(‰¾®ø8Í¦ïáƒ2
-P
-java:S1481"3Remove this unused "historyManager" local variable.(‰¾®ø8Ñ¦ïáƒ2
-r	java:S106&"+Replace this use of System.out by a logger.(£Ìô½ùÿÿÿÿ8˜Êéáƒ2J$b59c9ede-865b-4d51-aed9-f53fdf1e601a
-G	java:S106'"+Replace this use of System.out by a logger.(áÊïæ8Ó¦ïáƒ2
-L	java:S106("+Replace this use of System.out by a logger.(‹ÓÆ¾øÿÿÿÿ8Ó¦ïáƒ2
-G	java:S1063"+Replace this use of System.out by a logger.(Ú¬ùæ8Ô¦ïáƒ2
-L	java:S1064"+Replace this use of System.out by a logger.(£Ìô½ùÿÿÿÿ8Õ¦ïáƒ2
-G	java:S1065"+Replace this use of System.out by a logger.(áÊïæ8Õ¦ïáƒ2
-L	java:S1066"+Replace this use of System.out by a logger.(‹ÓÆ¾øÿÿÿÿ8Õ¦ïáƒ2
-G	java:S106R"+Replace this use of System.out by a logger.(œÇ‚8×¦ïáƒ2
-L	java:S106S"+Replace this use of System.out by a logger.(£Ìô½ùÿÿÿÿ8×¦ïáƒ2
-G	java:S106T"+Replace this use of System.out by a logger.(áÊïæ8×¦ïáƒ2
-L	java:S106U"+Replace this use of System.out by a logger.(‹ÓÆ¾øÿÿÿÿ8×¦ïáƒ2
-L	java:S106Y"+Replace this use of System.out by a logger.(ÏùŸœûÿÿÿÿ8Ø¦ïáƒ2
-L	java:S106["+Replace this use of System.out by a logger.(ÍÖÖûÿÿÿÿ8Ø¦ïáƒ2
-L	java:S106]"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8Ù¦ïáƒ2
+
+java:S1192$"VDefine a constant instead of duplicating this literal "Ğ’ÑĞµ Ğ·Ğ°Ğ´Ğ°Ñ‡Ğ¸: " 3 times.(£Ìô½ùÿÿÿÿ8Á¦ïáƒ2J$30e30985-5d59-4ddd-bd82-9d0a360d0877
+—
+java:S1192%"TDefine a constant instead of duplicating this literal "Ğ’ÑĞµ ÑĞ¿Ğ¸ĞºĞ¸: " 3 times.(áÊïæ8Á¦ïáƒ2J$a3d8cabf-633e-49a2-a391-b95ac995adbc
+¤
+java:S1192&"\Define a constant instead of duplicating this literal "Ğ’ÑĞµ Ğ¿Ğ¾Ğ´Ğ·Ğ°Ğ´Ğ°Ñ‡Ğ¸: " 3 times.(‹ÓÆ¾øÿÿÿÿ8Á¦ïáƒ2J$5a97bf5c-3a2a-4a37-a2f4-63ec4b28ae9c
+r	java:S106$"+Replace this use of System.out by a logger.(£Ìô½ùÿÿÿÿ8˜Êéáƒ2J$e574d6fb-6d01-4318-b488-9a46836e87c7
+m	java:S106%"+Replace this use of System.out by a logger.(áÊïæ8Ó¦ïáƒ2J$0371a5b4-0b75-45a5-9e0f-034a6d5714a9
+r	java:S106&"+Replace this use of System.out by a logger.(‹ÓÆ¾øÿÿÿÿ8Ó¦ïáƒ2J$58766f4b-ad45-4186-b19a-db35f91b4057
+m	java:S1061"+Replace this use of System.out by a logger.(Ú¬ùæ8Ô¦ïáƒ2J$7076d910-56c6-4391-bf71-d9ec7dd4c40c
+r	java:S1062"+Replace this use of System.out by a logger.(£Ìô½ùÿÿÿÿ8Õ¦ïáƒ2J$fc922081-9e3b-424c-863c-019012ab08d7
+m	java:S1063"+Replace this use of System.out by a logger.(áÊïæ8Õ¦ïáƒ2J$b9222826-431a-404f-862a-935a3223ba75
+r	java:S1064"+Replace this use of System.out by a logger.(‹ÓÆ¾øÿÿÿÿ8Õ¦ïáƒ2J$af6cae21-8f5d-4a41-ab35-f50a544a16c9
+m	java:S106P"+Replace this use of System.out by a logger.(œÇ‚8×¦ïáƒ2J$5a0f007a-3c6d-4979-b406-8d001f98db16
+r	java:S106Q"+Replace this use of System.out by a logger.(£Ìô½ùÿÿÿÿ8×¦ïáƒ2J$32b81ba3-e9cd-495b-939c-b40bc374b6b8
+m	java:S106R"+Replace this use of System.out by a logger.(áÊïæ8×¦ïáƒ2J$1b1d2b83-01c7-466a-a76e-c5499ed22599
+r	java:S106S"+Replace this use of System.out by a logger.(‹ÓÆ¾øÿÿÿÿ8×¦ïáƒ2J$edaf1648-6194-4a26-9608-7aea63bafb65
+r	java:S106W"+Replace this use of System.out by a logger.(ÏùŸœûÿÿÿÿ8Ø¦ïáƒ2J$ba10f324-8332-4f80-a03b-9a17e8574268
+r	java:S106Y"+Replace this use of System.out by a logger.(ÍÖÖûÿÿÿÿ8Ø¦ïáƒ2J$ae07d41a-4689-42e6-9b2d-3e3f54805d81
+r	java:S106["+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8Ù¦ïáƒ2J$a06f17d8-cbe8-4d59-9b68-f5e5ad552978
 U
-java:S1128"8Remove this unused import 'manager.InMemoryTaskManager'.(èä“Í8Ù¦ïáƒ2
+java:S1128"3Remove this unused import 'manager.HistoryManager'.(îšàşÿÿÿÿ8ûÏ”âƒ2

@@ -11,3 +11,9 @@ W
 'src/manager/InMemoryHistoryManager.java,2/f/2f81053c39a10e9fa7c0349eae9b01146d20c7cc
 F
 src/tasks/Subtask.java,b/b/bbba77347ddbcc1dcca42f59542c14c2194b0659
+C
+src/tasks/Task.java,3/2/3274c13c802fdd4f4c0bd72afbb851f447e32183
+I
+src/tasks/TaskStatus.java,6/a/6a8fdf9cab4dd4b1b0dd4f892822dc7f3940d15f
+Q
+!src/manager/CustomLinkedList.java,d/0/d0d8441fb9fffaf23b17cbdfa1ded5bf1a2ceaa3
