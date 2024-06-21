@@ -3,24 +3,37 @@ package manager;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final List<Task> history = new ArrayList<>();
-    private static final int HISTORY_CAPACITY = 10;
+
+    private final Map<Integer, Node> historyMap = new HashMap<>();
+    private final CustomLinkedList historyList = new CustomLinkedList();
 
     @Override
     public void add(Task task) {
         if (task != null) {
-            history.add(task);
-            if (history.size() > HISTORY_CAPACITY) {
-                history.remove(0);
-            }
+            remove(task.getId());
+            Node newNode = new Node(task);
+            historyList.linkLast(newNode);
+            historyMap.put(task.getId(), newNode);
         }
     }
 
     @Override
     public List<Task> getHistory() {
-        return new ArrayList<>(history);
+        return historyList.getTasks();
+    }
+
+    @Override
+    public void remove(int id) {
+        Node node = historyMap.remove(id);
+        if (node != null) {
+            historyList.removeNode(node);
+        }
     }
 }
