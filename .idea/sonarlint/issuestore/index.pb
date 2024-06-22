@@ -46,3 +46,7 @@ L
 test/HistoryManagerTest.java,b/5/b574116e60adb0c45f904287e4a42e3cd3238047
 F
 test/ManagersTest.java,e/3/e3faebb626bd784923f8a0d8fab606eab227b482
+Q
+!test/InMemoryTaskManagerTest.java,f/5/f5a029b4aaf1fe7c0abe0d5a823fa4ab223ac09a
+B
+test/TaskTest.java,f/0/f063c4f794dcabfdee02c7c765ec9118866621a6

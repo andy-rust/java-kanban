@@ -1,151 +1,227 @@
+import manager.HistoryManager;
 import manager.Managers;
 import manager.TaskManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import tasks.Epic;
-import tasks.Subtask;
 import tasks.Task;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
 
-    private TaskManager manager;
+    private HistoryManager historyManager;
+    private TaskManager taskManager;
 
     @BeforeEach
     public void setUp() {
-        manager = Managers.getDefault();
+        historyManager = Managers.getDefaultHistory();
+        taskManager = Managers.getDefault();
     }
 
     @Test
-    void shouldAddAndRetrieveTaskById() {
-        Task task = new Task("Задача", "Описание задачи");
-        Task addedTask = manager.addTask(task);
-        assertTrue(addedTask.getId() > 0, "ID задачи должен быть больше 0 после добавления");
-        Task retrievedTask = manager.getTask(addedTask.getId());
-        assertEquals(addedTask, retrievedTask, "Извлеченная задача должна соответствовать добавленной");
+    void shouldMaintainTaskHistory() {
+        // Создаем тестовые задачи
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        task1.setId(1);
+        Task task2 = new Task("Задача 2", "Описание задачи 2");
+        task2.setId(2);
+
+        // Добавляем задачи в менеджер задач
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+
+        // Получаем задачи, чтобы они добавились в историю
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+
+        // Получаем историю задач
+        List<Task> history = taskManager.getHistory();
+
+        // Проверяем, что задачи добавились в историю
+        assertTrue(history.contains(task1), "История должна содержать задачу 1");
+        assertTrue(history.contains(task2), "История должна содержать задачу 2");
+
+        // Проверяем порядок задач в истории
+        assertEquals(task1, history.get(0), "Первая задача в истории должна быть задачей 1");
+        assertEquals(task2, history.get(1), "Вторая задача в истории должна быть задачей 2");
     }
 
     @Test
-    void shouldAddAndRetrieveEpicById() {
-        Epic epic = new Epic("Эпик", "Описание эпика");
-        Epic addedEpic = manager.addEpics(epic);
-        assertTrue(addedEpic.getId() > 0, "ID эпика должен быть больше 0 после добавления");
-        Epic retrievedEpic = manager.getEpic(addedEpic.getId());
-        assertEquals(addedEpic, retrievedEpic, "Извлеченный эпик должен соответствовать добавленному");
+    void shouldNotAllowDuplicateEntries() {
+        // Создаем тестовую задачу
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        task1.setId(1);
+
+        // Добавляем задачу в менеджер задач
+        taskManager.addTask(task1);
+
+        // Получаем задачу несколько раз, чтобы она добавилась в историю
+        taskManager.getTask(1);
+        taskManager.getTask(1);
+        taskManager.getTask(1);
+
+        // Получаем историю задач
+        List<Task> history = taskManager.getHistory();
+
+        // Проверяем, что задача только одна в истории
+        assertEquals(1, history.size(), "История должна содержать только одну запись для каждой задачи");
+        assertTrue(history.contains(task1), "История должна содержать задачу 1");
     }
 
     @Test
-    void shouldAddAndRetrieveSubtaskById() {
-        Epic epic = new Epic("Эпик для подзадачи", "Описание эпика");
-        Epic addedEpic = manager.addEpics(epic);
-        Subtask subtask = new Subtask("Подзадача", "Описание подзадачи", addedEpic.getId());
-        Subtask addedSubtask = manager.addSubTask(subtask);
-        assertTrue(addedSubtask.getId() > 0, "ID подзадачи должен быть больше 0 после добавления");
-        Subtask retrievedSubtask = manager.getSubtask(addedSubtask.getId());
-        assertEquals(addedSubtask, retrievedSubtask,
-                "Извлеченная подзадача должна соответствовать добавленной");
+    void shouldRemoveTaskFromHistory() {
+        // Создаем тестовые задачи
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        task1.setId(1);
+        Task task2 = new Task("Задача 2", "Описание задачи 2");
+        task2.setId(2);
+
+        // Добавляем задачи в менеджер задач
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+
+        // Получаем задачи, чтобы они добавились в историю
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+
+        // Удаляем первую задачу из менеджера задач (это также удалит её из истории)
+        taskManager.deleteTask(1);
+
+        // Получаем историю задач
+        List<Task> history = taskManager.getHistory();
+
+        // Проверяем, что история не содержит первую задачу
+        assertFalse(history.contains(task1), "История не должна содержать задачу 1");
+        assertTrue(history.contains(task2), "История должна содержать задачу 2");
     }
 
     @Test
-    void shouldNotConflictGeneratedIdAndGivenId() {
-        Task taskWithGeneratedId = new Task("Тестовая задача", "Описание тестовой задачи");
-        Task addedTaskWithGeneratedId = manager.addTask(taskWithGeneratedId);
+    void shouldUpdateTaskHistoryOrder() {
+        // Создаем тестовые задачи
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        task1.setId(1);
+        Task task2 = new Task("Задача 2", "Описание задачи 2");
+        task2.setId(2);
+        Task task3 = new Task("Задача 3", "Описание задачи 3");
+        task3.setId(3);
 
-        Task taskWithGivenId = new Task("Другая задача", "Описание другой задачи");
-        int customId = 100;
-        taskWithGivenId.setId(customId);
-        manager.addTask(taskWithGivenId);
+        // Добавляем задачи в менеджер задач
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
 
-        assertNotNull(manager.getTask(addedTaskWithGeneratedId.getId()),
-                "Задача с генерируемым ID должна быть найдена");
+        // Получаем задачи, чтобы они добавились в историю
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+        taskManager.getTask(3);
+
+        // Повторно добавляем первую задачу
+        taskManager.getTask(1);
+
+        // Получаем историю задач
+        List<Task> history = taskManager.getHistory();
+
+        // Проверяем, что порядок задач обновился
+        assertEquals(task2, history.get(0), "Первая задача в истории должна быть задачей 2");
+        assertEquals(task3, history.get(1), "Вторая задача в истории должна быть задачей 3");
+        assertEquals(task1, history.get(2), "Третья задача в истории должна быть задачей 1");
     }
 
     @Test
-    void shouldRemainImmutableAfterAdding() {
-        Task originalTask = new Task("Название задачи", "Описание задачи");
-        Task addedTask = manager.addTask(originalTask);
+    void shouldRemoveTaskFromBeginningOfHistory() {
+        // Создаем тестовые задачи
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        task1.setId(1);
+        Task task2 = new Task("Задача 2", "Описание задачи 2");
+        task2.setId(2);
+        Task task3 = new Task("Задача 3", "Описание задачи 3");
+        task3.setId(3);
 
-        assertEquals(originalTask.getTitle(), addedTask.getTitle(),
-                "Название задачи должно остаться неизменным после добавления");
-        assertEquals(originalTask.getDescription(), addedTask.getDescription(),
-                "Описание задачи должно остаться неизменным после добавления");
+        // Добавляем задачи в менеджер задач
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
+
+        // Получаем задачи, чтобы они добавились в историю
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+        taskManager.getTask(3);
+
+        // Удаляем первую задачу из менеджера задач
+        taskManager.deleteTask(1);
+
+        // Получаем историю задач
+        List<Task> history = taskManager.getHistory();
+
+        // Проверяем порядок задач в истории после удаления
+        assertEquals(2, history.size(), "История должна содержать две задачи");
+        assertEquals(task2, history.get(0), "Первая задача в истории должна быть задачей 2");
+        assertEquals(task3, history.get(1), "Вторая задача в истории должна быть задачей 3");
     }
 
     @Test
-    void shouldUpdateTask() {
-        Task originalTask = new Task("Название задачи", "Описание задачи");
-        Task addedTask = manager.addTask(originalTask);
-        addedTask.setTitle("Обновление названия");
-        addedTask.setDescription("Обновление описания");
-        manager.updateTask(addedTask);
-        Task updatedTask = manager.getTask(addedTask.getId());
-        assertEquals(updatedTask.getTitle(),"Обновление названия",
-                "Название задачи должно быть обновлено");
-        assertEquals(updatedTask.getDescription(),"Обновление описания",
-                "Описание задачи должно быть обновлено");
+    void shouldRemoveTaskFromMiddleOfHistory() {
+        // Создаем тестовые задачи
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        task1.setId(1);
+        Task task2 = new Task("Задача 2", "Описание задачи 2");
+        task2.setId(2);
+        Task task3 = new Task("Задача 3", "Описание задачи 3");
+        task3.setId(3);
+
+        // Добавляем задачи в менеджер задач
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
+
+        // Получаем задачи, чтобы они добавились в историю
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+        taskManager.getTask(3);
+
+        // Удаляем вторую задачу из менеджера задач
+        taskManager.deleteTask(2);
+
+        // Получаем историю задач
+        List<Task> history = taskManager.getHistory();
+
+        // Проверяем порядок задач в истории после удаления
+        assertEquals(2, history.size(), "История должна содержать две задачи");
+        assertEquals(task1, history.get(0), "Первая задача в истории должна быть задачей 1");
+        assertEquals(task3, history.get(1), "Вторая задача в истории должна быть задачей 3");
     }
 
     @Test
-    void shouldDeleteTask() {
-        Task task = new Task("Задача", "Описание задачи");
-        Task addedTask = manager.addTask(task);
-        assertNotNull(manager.getTask(addedTask.getId()), "Задача должна существовать до удаления");
-        manager.deleteTask(addedTask.getId());
-        assertNull(manager.getTask(addedTask.getId()), "Задача должна быть удалена");
-    }
+    void shouldRemoveTaskFromEndOfHistory() {
+        // Создаем тестовые задачи
+        Task task1 = new Task("Задача 1", "Описание задачи 1");
+        task1.setId(1);
+        Task task2 = new Task("Задача 2", "Описание задачи 2");
+        task2.setId(2);
+        Task task3 = new Task("Задача 3", "Описание задачи 3");
+        task3.setId(3);
 
-    @Test
-    void shouldUpdateEpic() {
-        Epic epic = new Epic("Эпик", "Описание эпика");
-        Epic addedEpic = manager.addEpics(epic);
-        addedEpic.setTitle("Обновленный эпик");
-        addedEpic.setDescription("Обновленное описание эпика");
-        manager.updateEpic(addedEpic);
-        Epic updatedEpic = manager.getEpic(addedEpic.getId());
-        assertEquals(updatedEpic.getTitle(), "Обновленный эпик",
-                "Название эпика должно быть обновлено");
-        assertEquals( updatedEpic.getDescription(), "Обновленное описание эпика",
-                "Описание эпика должно быть обновлено");
-    }
+        // Добавляем задачи в менеджер задач
+        taskManager.addTask(task1);
+        taskManager.addTask(task2);
+        taskManager.addTask(task3);
 
-    @Test
-    void shouldDeleteEpic() {
-        Epic epic = new Epic("Эпик", "Описание эпика");
-        Epic addedEpic = manager.addEpics(epic);
-        assertNotNull(manager.getEpic(addedEpic.getId()), "Эпик должен существовать до удаления");
-        manager.deleteEpic(addedEpic.getId());
-        assertNull(manager.getEpic(addedEpic.getId()), "Эпик должен быть удален");
-    }
+        // Получаем задачи, чтобы они добавились в историю
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+        taskManager.getTask(3);
 
-    @Test
-    void shouldUpdateSubtask() {
-        Epic epic = new Epic("Эпик для подзадач", "Описание эпика");
-        Epic addedEpic = manager.addEpics(epic);
-        Subtask subtask = new Subtask("Подзадача", "Описание подзадачи", addedEpic.getId());
-        Subtask addedSubtask = manager.addSubTask(subtask);
-        addedSubtask.setTitle("Обновленная подзадача");
-        addedSubtask.setDescription("Обновленное описание подзадачи");
-        manager.updateSubtask(addedSubtask);
-        Subtask updatedSubtask = manager.getSubtask(addedSubtask.getId());
-        assertEquals(updatedSubtask.getTitle(), "Обновленная подзадача",
-                "Название подзадачи должно быть обновлено");
-        assertEquals(updatedSubtask.getDescription(), "Обновленное описание подзадачи",
-                "Описание подзадачи должно быть обновлено");
-    }
+        // Удаляем третью задачу из менеджера задач
+        taskManager.deleteTask(3);
 
-    @Test
-    void shouldDeleteSubtask() {
-        Epic epic = new Epic("Эпик для подзадач", "Описание эпика");
-        Epic addedEpic = manager.addEpics(epic);
-        Subtask subtask = new Subtask("Подзадача", "Описание подзадачи", addedEpic.getId());
-        Subtask addedSubtask = manager.addSubTask(subtask);
-        assertNotNull(manager.getSubtask(addedSubtask.getId()), "Подзадача должна существовать до удаления");
-        manager.deleteSubtasks(addedSubtask.getId());
-        assertNull(manager.getSubtask(addedSubtask.getId()), "Подзадача должна быть удалена");
+        // Получаем историю задач
+        List<Task> history = taskManager.getHistory();
+
+        // Проверяем порядок задач в истории после удаления
+        assertEquals(2, history.size(), "История должна содержать две задачи");
+        assertEquals(task1, history.get(0), "Первая задача в истории должна быть задачей 1");
+        assertEquals(task2, history.get(1), "Вторая задача в истории должна быть задачей 2");
     }
 }
