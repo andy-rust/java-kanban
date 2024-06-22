@@ -42,3 +42,7 @@ R
 "tests/test/HistoryManagerTest.java,8/f/8f51ec522770d5e765c8d69e7326c8a991251a41
 L
 tests/test/ManagersTest.java,4/2/4202be75e81972242bd35da152d812e4ff942dc8
+L
+test/HistoryManagerTest.java,b/5/b574116e60adb0c45f904287e4a42e3cd3238047
+F
+test/ManagersTest.java,e/3/e3faebb626bd784923f8a0d8fab606eab227b482
