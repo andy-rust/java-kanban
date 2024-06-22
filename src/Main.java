@@ -1,5 +1,4 @@
 import java.util.List;
-
 import manager.Managers;
 import manager.TaskManager;
 import tasks.Epic;
@@ -8,8 +7,10 @@ import tasks.Task;
 import tasks.TaskStatus;
 
 public class Main {
+
         public static void main(String[] args) {
-                TaskManager manager = Managers.getDefault();  // Используем фабричный метод для получения экземпляра TaskManager
+
+                TaskManager manager = Managers.getDefault();
 
                 // Создание и добавление задач
                 Task task1 = new Task("Задача 1", "Описание для задачи 1");

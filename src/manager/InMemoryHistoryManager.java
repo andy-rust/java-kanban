@@ -1,24 +1,18 @@
 package manager;
 
 import tasks.Task;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private final Map<Integer, Node> historyMap = new HashMap<>();
     private final CustomLinkedList historyList = new CustomLinkedList();
 
     @Override
     public void add(Task task) {
         if (task != null) {
-            remove(task.getId());
-            Node newNode = new Node(task);
+            historyList.remove(task.getId());
+            CustomLinkedList.Node newNode = historyList.createNode(task);
             historyList.linkLast(newNode);
-            historyMap.put(task.getId(), newNode);
         }
     }
 
@@ -29,9 +23,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        Node node = historyMap.remove(id);
-        if (node != null) {
-            historyList.removeNode(node);
-        }
+        historyList.remove(id);
     }
 }
