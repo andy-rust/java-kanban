@@ -38,3 +38,7 @@ G
 tests/ManagersTest.java,7/5/7520b98e8507738bb34d22e4c75469e216d6ce8a
 C
 tests/TaskTest.java,c/7/c795cc31f5825095c777c5279e7d56736e94e9e0
+R
+"tests/test/HistoryManagerTest.java,8/f/8f51ec522770d5e765c8d69e7326c8a991251a41
+L
+tests/test/ManagersTest.java,4/2/4202be75e81972242bd35da152d812e4ff942dc8
