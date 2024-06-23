@@ -10,9 +10,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void add(Task task) {
         if (task != null) {
-            historyList.remove(task.getId());
-            CustomLinkedList.Node newNode = historyList.createNode(task);
-            historyList.linkLast(newNode);
+            historyList.removeNode(historyList.getNodeById(task.getId()));
+            historyList.linkLast(task);
         }
     }
 
@@ -23,6 +22,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        historyList.remove(id);
+        historyList.removeNode(historyList.getNodeById(id));
     }
 }

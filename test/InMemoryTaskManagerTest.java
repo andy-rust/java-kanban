@@ -11,12 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
 
-    private HistoryManager historyManager;
     private TaskManager taskManager;
 
     @BeforeEach
     public void setUp() {
-        historyManager = Managers.getDefaultHistory();
         taskManager = Managers.getDefault();
     }
 

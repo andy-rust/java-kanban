@@ -13,7 +13,8 @@ class CustomLinkedList {
     private Node tail;
     private final Map<Integer, Node> historyMap = new HashMap<>();
 
-    void linkLast(Node newNode) {
+    void linkLast(Task task) {
+        Node newNode = new Node(task);
         if (tail == null) {
             head = newNode;
         } else {
@@ -46,13 +47,6 @@ class CustomLinkedList {
         historyMap.remove(node.task.getId());
     }
 
-    void remove(int id) {
-        Node node = historyMap.remove(id);
-        if (node != null) {
-            removeNode(node);
-        }
-    }
-
     List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         Node current = head;
@@ -63,10 +57,6 @@ class CustomLinkedList {
         return tasks;
     }
 
-    Node createNode(Task task) {
-        return new Node(task);
-    }
-
      static class Node {
         Task task;
         Node prev;
@@ -75,5 +65,9 @@ class CustomLinkedList {
         Node(Task task) {
             this.task = task;
         }
+    }
+
+    Node getNodeById(int id) {
+        return historyMap.get(id);
     }
 }
