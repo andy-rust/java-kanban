@@ -25,7 +25,8 @@ class CustomLinkedList {
         historyMap.put(newNode.task.getId(), newNode);
     }
 
-    void removeNode(Node node) {
+    void removeNode(int id) {
+        Node node = historyMap.get(id);
         if (node == null) {
             return;
         }

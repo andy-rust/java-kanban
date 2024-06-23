@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HistoryManagerTest {
 
-    private TaskManager taskManager;
+    private HistoryManager historyManager;
 
     @BeforeEach
     public void setUp() {
-        taskManager = Managers.getDefault();
+        historyManager = Managers.getDefaultHistory();
     }
 
     @Test
@@ -28,15 +28,11 @@ class HistoryManagerTest {
         task2.setId(2);
 
         // Добавляем задачи в менеджер задач
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-
-        // Получаем задачи, чтобы они добавились в историю
-        taskManager.getTask(1);
-        taskManager.getTask(2);
+        historyManager.add(task1);
+        historyManager.add(task2);
 
         // Получаем историю задач
-        List<Task> history = taskManager.getHistory();
+        List<Task> history = historyManager.getHistory();
 
         // Проверяем, что задачи добавились в историю
         assertTrue(history.contains(task1), "История должна содержать задачу 1");
@@ -54,15 +50,15 @@ class HistoryManagerTest {
         task1.setId(1);
 
         // Добавляем задачу в менеджер задач
-        taskManager.addTask(task1);
+        historyManager.add(task1);
 
-        // Получаем задачу несколько раз, чтобы она добавилась в историю
-        taskManager.getTask(1);
-        taskManager.getTask(1);
-        taskManager.getTask(1);
+        // Добавляем задачу несколько раз, чтобы она добавилась в историю
+        historyManager.add(task1);
+        historyManager.add(task1);
+        historyManager.add(task1);
 
         // Получаем историю задач
-        List<Task> history = taskManager.getHistory();
+        List<Task> history = historyManager.getHistory();
 
         // Проверяем, что задача только одна в истории
         assertEquals(1, history.size(), "История должна содержать только одну запись для каждой задачи");
@@ -78,18 +74,14 @@ class HistoryManagerTest {
         task2.setId(2);
 
         // Добавляем задачи в менеджер задач
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-
-        // Получаем задачи, чтобы они добавились в историю
-        taskManager.getTask(1);
-        taskManager.getTask(2);
+        historyManager.add(task1);
+        historyManager.add(task2);
 
         // Удаляем первую задачу из менеджера задач (это также удалит её из истории)
-        taskManager.deleteTask(1);
+        historyManager.remove(1);
 
         // Получаем историю задач
-        List<Task> history = taskManager.getHistory();
+        List<Task> history = historyManager.getHistory();
 
         // Проверяем, что история не содержит первую задачу
         assertFalse(history.contains(task1), "История не должна содержать задачу 1");
@@ -108,20 +100,15 @@ class HistoryManagerTest {
         task3.setId(3);
 
         // Добавляем задачи в менеджер задач
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addTask(task3);
-
-        // Получаем задачи, чтобы они добавились в историю
-        taskManager.getTask(1);
-        taskManager.getTask(2);
-        taskManager.getTask(3);
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
 
         // Повторно добавляем первую задачу
-        taskManager.getTask(1);
+        historyManager.add(task1);
 
         // Получаем историю задач
-        List<Task> history = taskManager.getHistory();
+        List<Task> history = historyManager.getHistory();
 
         // Проверяем, что порядок задач обновился
         assertEquals(task2, history.get(0), "Первая задача в истории должна быть задачей 2");
@@ -140,20 +127,15 @@ class HistoryManagerTest {
         task3.setId(3);
 
         // Добавляем задачи в менеджер задач
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addTask(task3);
-
-        // Получаем задачи, чтобы они добавились в историю
-        taskManager.getTask(1);
-        taskManager.getTask(2);
-        taskManager.getTask(3);
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
 
         // Удаляем первую задачу из менеджера задач
-        taskManager.deleteTask(1);
+        historyManager.remove(1);
 
         // Получаем историю задач
-        List<Task> history = taskManager.getHistory();
+        List<Task> history = historyManager.getHistory();
 
         // Проверяем порядок задач в истории после удаления
         assertEquals(2, history.size(), "История должна содержать две задачи");
@@ -172,20 +154,15 @@ class HistoryManagerTest {
         task3.setId(3);
 
         // Добавляем задачи в менеджер задач
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addTask(task3);
-
-        // Получаем задачи, чтобы они добавились в историю
-        taskManager.getTask(1);
-        taskManager.getTask(2);
-        taskManager.getTask(3);
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
 
         // Удаляем вторую задачу из менеджера задач
-        taskManager.deleteTask(2);
+        historyManager.remove(2);
 
         // Получаем историю задач
-        List<Task> history = taskManager.getHistory();
+        List<Task> history = historyManager.getHistory();
 
         // Проверяем порядок задач в истории после удаления
         assertEquals(2, history.size(), "История должна содержать две задачи");
@@ -204,20 +181,15 @@ class HistoryManagerTest {
         task3.setId(3);
 
         // Добавляем задачи в менеджер задач
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
-        taskManager.addTask(task3);
-
-        // Получаем задачи, чтобы они добавились в историю
-        taskManager.getTask(1);
-        taskManager.getTask(2);
-        taskManager.getTask(3);
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.add(task3);
 
         // Удаляем третью задачу из менеджера задач
-        taskManager.deleteTask(3);
+        historyManager.remove(3);
 
         // Получаем историю задач
-        List<Task> history = taskManager.getHistory();
+        List<Task> history = historyManager.getHistory();
 
         // Проверяем порядок задач в истории после удаления
         assertEquals(2, history.size(), "История должна содержать две задачи");
