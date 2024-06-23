@@ -67,8 +67,4 @@ class CustomLinkedList {
             this.task = task;
         }
     }
-
-    Node getNodeById(int id) {
-        return historyMap.get(id);
-    }
 }
