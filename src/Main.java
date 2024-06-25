@@ -1,4 +1,5 @@
-import manager.InMemoryTaskManager;
+import java.util.List;
+import manager.Managers;
 import manager.TaskManager;
 import tasks.Epic;
 import tasks.Subtask;
@@ -6,8 +7,10 @@ import tasks.Task;
 import tasks.TaskStatus;
 
 public class Main {
+
         public static void main(String[] args) {
-                TaskManager manager = new InMemoryTaskManager();
+
+                TaskManager manager = Managers.getDefault();
 
                 // Создание и добавление задач
                 Task task1 = new Task("Задача 1", "Описание для задачи 1");
@@ -48,14 +51,43 @@ public class Main {
                 System.out.println("Все эпики: " + manager.getAllEpics());
                 System.out.println("Все подзадачи: " + manager.getAllSubtasks());
 
-                // Удаление задачи и эпика
+                // Запрос задач и эпиков несколько раз в разном порядке
+                manager.getTask(task1.getId());
+                manager.getEpic(epic2.getId());
+                manager.getTask(task2.getId());
+                manager.getSubtask(subtask1.getId());
+                manager.getEpic(epic1.getId());
+                manager.getSubtask(subtask2.getId());
+                manager.getSubtask(subtask3.getId());
+                manager.getTask(task1.getId());
+
+                // Печатаем историю
+                printHistory(manager.getHistory());
+
+                // Удаляем задачу, которая есть в истории
                 manager.deleteTask(task1.getId());
+
+                // Проверяем, что при печати она не будет выводиться
+                printHistory(manager.getHistory());
+
+                // Удаляем эпик с тремя подзадачами
                 manager.deleteEpic(epic1.getId());
+
+                // Проверяем, что эпик и все его подзадачи удалены из истории
+                printHistory(manager.getHistory());
 
                 // Повторная распечатка после удаления
                 System.out.println("\nПосле удаления:");
                 System.out.println("Все задачи: " + manager.getAllTasks());
                 System.out.println("Все эпики: " + manager.getAllEpics());
+                System.out.println("Все подзадачи: " + manager.getAllSubtasks());
+        }
+
+        private static void printHistory(List<Task> history) {
+                System.out.println("История:");
+                for (Task task : history) {
+                        System.out.println(task);
+                }
                 System.out.println();
         }
 }

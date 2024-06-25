@@ -23,7 +23,7 @@ class ManagersTest {
         assertTrue(taskManager.getAllSubtasks().isEmpty(), "Список подзадач должен быть пустым.");
 
         // Для HistoryManager
-        assertTrue(historyManager.getHistory().isEmpty(), "История просмотров должна быть пустой.");
+        assertTrue(taskManager.getHistory().isEmpty(), "История просмотров должна быть пустой.");
     }
 
 }
